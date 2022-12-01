@@ -4,7 +4,7 @@ fun <T> Sequence<T>.splitAt(predicate: (T) -> Boolean): Sequence<List<T>> = sequ
     val accumulator = mutableListOf<T>()
     for (element in this@splitAt) {
         if (predicate(element)) {
-            yield(accumulator)
+            yield(accumulator.toList())
             accumulator.clear()
         } else {
             accumulator.add(element)
