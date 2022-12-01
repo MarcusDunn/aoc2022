@@ -1,11 +1,11 @@
-# Advent of Code 2022
+# 🎄 Advent of Code 2022 🎄
 
-## About
+## 🎅🏻 About
 
 These are my attempts at the [advent of code][00] challenges. Expect some hacky solutions, some over-engineered
 solutions, and if I'm lucky, some elegant solutions.
 
-## Running
+## 🏃🏻 Running
 
 You can run the tests for each day using
 
@@ -13,7 +13,7 @@ You can run the tests for each day using
 
 where `<number>` is the zero-padded day number.
 
-## Days
+## 🗓️ Days
 
 - [x] 01 [CalorieCounting][01]
 - [ ] 02
