@@ -1,7 +1,5 @@
 # Advent of Code 2022
 
-___
-
 ## About
 
 These are my attempts at the [advent of code][00] challenges. Expect some hacky solutions, some over-engineered
@@ -14,8 +12,6 @@ You can run the tests for each day using
 > `./gradlew test --tests "io.github.marcusdunn.aoc2022.day<number>.*"`
 
 where `<number>` is the zero-padded day number.
-
-[00]: https://adventofcode.com/2022
 
 ## Days
 
