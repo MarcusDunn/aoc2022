@@ -4,7 +4,7 @@ import java.util.PriorityQueue
 import java.util.Queue
 
 fun <T> Sequence<T>.splitAt(predicate: (T) -> Boolean): Sequence<Sequence<T>> = sequence {
-    val iterator = this@splitAt.iterator()
+    val iterator = iterator()
     while (iterator.hasNext()) {
         yield(sequence {
             while (iterator.hasNext()) {
@@ -18,7 +18,7 @@ fun <T> Sequence<T>.splitAt(predicate: (T) -> Boolean): Sequence<Sequence<T>> = 
     }
 }
 
-class CapacityRestrictedPriorityQueue<T> private constructor(
+class CapacityRestrictedPriorityQueue<T: Any> private constructor(
     private val capacity: Int,
     private val comparator: Comparator<T>,
     private val inner: PriorityQueue<T>,

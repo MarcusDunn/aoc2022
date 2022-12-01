@@ -14,6 +14,6 @@ private fun getTop(path: Path, count: Int) = path.useLines {
     it
         .splitAt { it.isBlank() }
         .map { it.sumOf { it.toInt() } }
-        .fold(CapacityRestrictedPriorityQueue<Int>(count)) { q, value -> q.apply { q.add(value) } }
-        .sumOf { it }
+        .fold(CapacityRestrictedPriorityQueue<Int>(count)) { q, value -> q.apply { add(value) } }
+        .sum()
 }
