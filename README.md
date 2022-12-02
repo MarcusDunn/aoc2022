@@ -11,7 +11,7 @@ You can run the tests for each day using
 ```
 ./gradlew test --tests "io.github.marcusdunn.aoc2022.day<number>.*"
 ```
-where `<number>` is the zero-padded day number.
+where `<number>` is the zero-padded day number (eg. `01`).
 
 ## Days
 
