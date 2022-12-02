@@ -8,9 +8,9 @@ solutions, and if I'm lucky, some elegant solutions.
 ## Running
 
 You can run the tests for each day using
-
-> `./gradlew test --tests "io.github.marcusdunn.aoc2022.day<number>.*"`
-
+```
+./gradlew test --tests "io.github.marcusdunn.aoc2022.day<number>.*"
+```
 where `<number>` is the zero-padded day number.
 
 ## Days
