@@ -16,7 +16,7 @@ where `<number>` is the zero-padded day number.
 ## Days
 
 - [x] 01 [Calorie Counting][01]
-- [ ] 02 [Rock Paper Scissors][02]
+- [x] 02 [Rock Paper Scissors][02]
 - [ ] 03
 - [ ] 04
 - [ ] 05
