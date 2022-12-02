@@ -4,7 +4,7 @@ import kotlin.io.path.Path
 import kotlin.test.assertEquals
 import org.junit.jupiter.api.Test
 
-class TestDay2 {
+class RockPaperScissorsTest {
     @Test
     internal fun `check part 2`() {
         assertEquals(14184, part2(Path("src/test/resources/day02/input.txt")))

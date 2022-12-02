@@ -15,8 +15,8 @@ where `<number>` is the zero-padded day number.
 
 ## Days
 
-- [x] 01 [CalorieCounting][01]
-- [ ] 02
+- [x] 01 [Calorie Counting][01]
+- [ ] 02 [Rock Paper Scissors][02]
 - [ ] 03
 - [ ] 04
 - [ ] 05
@@ -44,3 +44,5 @@ where `<number>` is the zero-padded day number.
 [00]: https://adventofcode.com/
 
 [01]: https://github.com/MarcusDunn/aoc2022/blob/master/src/main/kotlin/io/github/marcusdunn/aoc2022/day01/CalorieCounting.kt
+
+[02]: https://github.com/MarcusDunn/aoc2022/blob/master/src/main/kotlin/io/github/marcusdunn/aoc2022/day02/RockPaperScissors.kt
