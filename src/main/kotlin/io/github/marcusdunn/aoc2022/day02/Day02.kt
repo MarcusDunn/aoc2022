@@ -17,22 +17,22 @@ fun score(op: Char, me: Char) = when (me) {
         'A' -> 3
         'B' -> 1
         'C' -> 2
-        else -> TODO()
+        else -> throw IllegalArgumentException("must be one of A, B, or C")
     }
     // draw
     'Y' -> 3 + when (op) {
         'A' -> 1
         'B' -> 2
         'C' -> 3
-        else -> TODO()
+        else -> throw IllegalArgumentException("must be one of A, B, or C")
     }
     // win
     'Z' -> 6 + when (op) {
         'A' -> 2
         'B' -> 3
         'C' -> 1
-        else -> TODO()
+        else -> throw IllegalArgumentException("must be one of A, B, or C")
     }
 
-    else -> TODO()
+    else -> throw IllegalArgumentException("must be one of X, Y, or Z")
 }
