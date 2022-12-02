@@ -22,7 +22,6 @@ class CalorieCountingTest {
         val sumTopThree = sumTopThree(Path.of("src/test/resources/day01/sample.txt"))
         assertEquals(45000, sumTopThree)
     }
-
     @Test
     internal fun `check part 2`() {
         val sumTopThree = sumTopThree(Path.of("src/test/resources/day01/input.txt"))
