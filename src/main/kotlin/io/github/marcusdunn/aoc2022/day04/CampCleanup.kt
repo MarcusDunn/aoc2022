@@ -3,7 +3,7 @@ package io.github.marcusdunn.aoc2022.day04
 import java.nio.file.Path
 import kotlin.io.path.useLines
 
-fun part1(path: Path): Int = path.useLines { lines ->
+fun part1(path: Path) = path.useLines { lines ->
     lines
         .parse()
         .count { (fst, snd) -> fst.contains(snd) || snd.contains(fst) }
@@ -24,5 +24,9 @@ private fun Sequence<String>.parse() = this
     }
     .map { (fst, snd) -> fst to snd }
 
-private fun IntRange.overlap(intRange: IntRange) = intRange.any { it in this }
+private fun IntRange.overlap(intRange: IntRange) =
+        this.first >= intRange.first && this.first <= intRange.last ||
+        this.last >= intRange.first && this.last <= intRange.last ||
+        this.first <= intRange.first && this.last >= intRange.first ||
+        this.first <= intRange.last && this.last >= intRange.last
 private fun IntRange.contains(intRange: IntRange) = intRange.first in this && intRange.last in this
