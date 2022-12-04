@@ -16,12 +16,13 @@ fun part2(path: Path) = path.useLines { lines ->
 }
 
 private fun Sequence<String>.parse() = this
-    .map { it.split(",") }
+    .map { it.split(",", limit = 2) }
     .map {
         it
             .map { it.split("-").map { it.toInt() } }
             .map { (fst, snd) -> fst..snd }
     }
+    .map { (fst, snd) -> fst to snd }
 
-fun IntRange.overlap(intRange: IntRange) = intRange.any { it in this }
-fun IntRange.contains(intRange: IntRange) = intRange.first in this && intRange.last in this
+private fun IntRange.overlap(intRange: IntRange) = intRange.any { it in this }
+private fun IntRange.contains(intRange: IntRange) = intRange.first in this && intRange.last in this
