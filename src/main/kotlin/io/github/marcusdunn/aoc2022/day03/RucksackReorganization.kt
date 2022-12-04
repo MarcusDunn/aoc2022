@@ -5,15 +5,15 @@ import kotlin.io.path.useLines
 
 fun part1(path: Path) = path.useLines { lines ->
     lines
-        .map { it.take(it.length / 2) to it.takeLast(it.length / 2) }
-        .flatMap { (fst, snd) -> fst.filter { it in snd }.toList().distinct() }
+        .map { it.chunked(it.length / 2) { str -> str.toSet() } }
+        .flatMap { it.reduce { acc, next -> acc.intersect(next) } }
         .sumOf { value(it) }
 }
 
 fun part2(path: Path) = path.useLines { lines ->
     lines
-        .chunked(3)
-        .flatMap { (fst, snd, thd) -> fst.filter { it in snd && it in thd }.toList().distinct() }
+        .chunked(3) { it.map { str -> str.toSet() } }
+        .flatMap { it.reduce { acc, next -> acc.intersect(next) } }
         .sumOf { value(it) }
 }
 
