@@ -6,9 +6,9 @@ import io.github.marcusdunn.aoc2022.splitAt
 import java.nio.file.Path
 import kotlin.io.path.useLines
 
-fun maxElf(path: Path) = getTop(path, 1)
+fun part1(path: Path) = getTop(path, 1)
 
-fun sumTopThree(path: Path) = getTop(path, 3)
+fun part2(path: Path) = getTop(path, 3)
 
 private fun getTop(path: Path, count: Int) = path.useLines {
     it
