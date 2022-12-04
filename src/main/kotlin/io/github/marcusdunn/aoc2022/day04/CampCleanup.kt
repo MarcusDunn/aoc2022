@@ -24,4 +24,4 @@ fun part2(path: Path) = path.useLines { lines ->
     lines
         .parse()
         .count { (fst, snd) -> fst.overlap(snd) || snd.overlap(fst) }
-}.toString()
+}

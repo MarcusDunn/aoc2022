@@ -15,12 +15,12 @@ class CampCleanupTest {
     @Test
     fun `check part 1`() {
         val part1 = part1(Path("src/test/resources/day04/input.txt"))
-        assertEquals(0, part1)
+        assertEquals(602, part1)
     }
 
     @Test
     fun `check part 2`() {
         val part2 = part2(Path("src/test/resources/day04/input.txt"))
-        assertEquals("0", part2)
+        assertEquals(891, part2)
     }
 }
