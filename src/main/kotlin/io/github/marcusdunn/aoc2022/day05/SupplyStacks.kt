@@ -5,7 +5,6 @@ import java.nio.file.Path
 import kotlin.io.path.useLines
 
 fun part1(path: Path) = solve(CrateMover9000, path)
-
 fun part2(path: Path) = solve(CrateMover9001, path)
 private fun solve(crane: Crane, path: Path) = parse(path) { crates, commands -> run(crane, crates, commands) }
 
@@ -15,7 +14,7 @@ private fun run(crane: Crane, crates: Crates, commands: Sequence<Command>) = com
     .fold(crates) { acc, command -> crane.runCommand(command, acc) }
     .values
     .map { it.last() }
-    .joinToString("")
+    .joinToString(separator = "")
 
 private fun <T> parse(path: Path, block: (crates: Crates, commands: Sequence<Command>) -> T) = path
     .useLines { lines ->
@@ -33,11 +32,10 @@ private fun parseCrates(cratesLines: Sequence<String>): Crates {
                 .map { if (it == ' ') null else it }
         }.toList()
     val rows = rowsWithIndex.dropLast(1)
-    val indexes = rowsWithIndex
+    val columns = rowsWithIndex
         .last()
         .map { it ?: throw NullPointerException("last row contained null values") }
         .map { it.digitToInt() }
-    val columns = indexes
         .associateWith { idx ->
             rows
                 .map { it.getOrNull(idx - 1) }
