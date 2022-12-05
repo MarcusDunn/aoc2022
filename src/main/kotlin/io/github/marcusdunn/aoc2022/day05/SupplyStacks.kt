@@ -17,8 +17,8 @@ private fun solve(crane: Crane, path: Path): String {
                 .map { if (it.getOrNull(1) == ' ') null else it.getOrNull(1) }
         }
     val rows = rowsWithIndex.dropLast(1)
-    val index = rowsWithIndex.last()
-    val columns = index
+    val columns = rowsWithIndex
+        .last()
         .map { it!!.digitToInt() }
         .associateWith { idx ->
             rows
@@ -28,8 +28,12 @@ private fun solve(crane: Crane, path: Path): String {
         }
     return commands
         .lines()
-        .map {
-            it.split("move", "from", "to").filter { it.isNotBlank() }.map { it.trim().toInt() }
+        .map { line ->
+            line
+                .split("move", "from", "to")
+                .filter { it.isNotBlank() }
+                .map { it.trim() }
+                .map { it.toInt() }
         }
         .map { (move, from, to) -> crane.createCommand(move, from, to) }
         .fold(columns) { acc, command -> command.execute(acc) }
@@ -38,15 +42,15 @@ private fun solve(crane: Crane, path: Path): String {
         .joinToString(separator = "")
 }
 
-fun interface Crane {
+private fun interface Crane {
     fun createCommand(amount: Int, from: Int, to: Int): Command
 }
 
-fun interface Command {
+private fun interface Command {
     fun execute(columns: Map<Int, List<Char>>): Map<Int, List<Char>>
 }
 
-object CrateMover9000 : Crane {
+private object CrateMover9000 : Crane {
     override fun createCommand(amount: Int, from: Int, to: Int) = Command { columns ->
         columns.toMutableMap().apply {
             val fromCol = get(from)!!
@@ -57,7 +61,7 @@ object CrateMover9000 : Crane {
     }
 }
 
-object CrateMover9001 : Crane {
+private object CrateMover9001 : Crane {
     override fun createCommand(amount: Int, from: Int, to: Int) = Command { columns ->
         columns.toMutableMap().apply {
             val fromCol = get(from)!!
