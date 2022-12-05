@@ -14,12 +14,15 @@ private fun solve(crane: Crane, path: Path): String {
         .map { line ->
             line
                 .chunked(4)
-                .map { if (it.getOrNull(1) == ' ') null else it.getOrNull(1) }
+                .map { it[1] }
+                .map { if (it == ' ') null else it }
         }
     val rows = rowsWithIndex.dropLast(1)
-    val columns = rowsWithIndex
+    val indexes = rowsWithIndex
         .last()
-        .map { it!!.digitToInt() }
+        .map { it ?: throw NullPointerException("last row contained null values") }
+        .map { it.digitToInt() }
+    val columns = indexes
         .associateWith { idx ->
             rows
                 .map { it.getOrNull(idx - 1) }
@@ -50,22 +53,22 @@ private fun interface Command {
     fun execute(columns: Map<Int, List<Char>>): Map<Int, List<Char>>
 }
 
-private object CrateMover9000 : Crane {
-    override fun createCommand(amount: Int, from: Int, to: Int) = Command { columns ->
+private val CrateMover9000 = Crane { amount, from, to ->
+    Command { columns ->
         columns.toMutableMap().apply {
-            val fromCol = get(from)!!
-            val toCol = get(to)!!
+            val fromCol = getOrElse(from) { throw IndexOutOfBoundsException("no entry for $from") }
+            val toCol = getOrElse(to) { throw IndexOutOfBoundsException("no entry for $to") }
             set(to, toCol + fromCol.takeLast(amount).reversed())
             set(from, fromCol.dropLast(amount))
         }
     }
 }
 
-private object CrateMover9001 : Crane {
-    override fun createCommand(amount: Int, from: Int, to: Int) = Command { columns ->
+private val CrateMover9001 = Crane { amount, from, to ->
+    Command { columns ->
         columns.toMutableMap().apply {
-            val fromCol = get(from)!!
-            val toCol = get(to)!!
+            val fromCol = getOrElse(from) { throw IndexOutOfBoundsException("no entry for $from in $this") }
+            val toCol = getOrElse(to) { throw IndexOutOfBoundsException("no entry for $from in $this") }
             set(to, toCol + fromCol.takeLast(amount))
             set(from, fromCol.dropLast(amount))
         }
