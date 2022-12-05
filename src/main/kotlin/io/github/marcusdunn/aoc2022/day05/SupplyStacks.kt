@@ -1,33 +1,37 @@
 package io.github.marcusdunn.aoc2022.day05
 
+import io.github.marcusdunn.aoc2022.splitAt
 import java.nio.file.Path
-import kotlin.io.path.readText
+import kotlin.io.path.useLines
 
 fun part1(path: Path) = solve(CrateMover9000, path)
 
 fun part2(path: Path) = solve(CrateMover9001, path)
 
-private fun solve(crane: Crane, path: Path) = parse(path)
-    .let { (crates, commands) ->
-        commands
-            .fold(crates) { acc, command -> crane.runCommand(command, acc) }
-            .values
-            .flatten()
-            .joinToString("")
+private typealias Crates = Map<Int, List<Char>>
+
+private fun solve(crane: Crane, path: Path) = parse(path) { crates, commands -> run(crane, crates, commands) }
+private fun run(crane: Crane, crates: Crates, commands: Sequence<Command>) = commands
+    .fold(crates) { acc, command -> crane.runCommand(command, acc) }
+    .values
+    .map { it.last() }
+    .joinToString("")
+
+private fun <T> parse(path: Path, block: (crates: Crates, commands: Sequence<Command>) -> T) = path
+    .useLines { lines ->
+        lines
+            .splitAt { it.isBlank() }
+            .iterator()
+            .run { block(parseColumns(next()), parseCommands(next())) }
     }
 
-typealias Crates = Map<Int, List<Char>>
-
-private fun parse(path: Path): Pair<Crates, List<Command>> {
-    val (crates, commandsString) = path.readText().split("\n\n")
-    val rowsWithIndex = crates
-        .lines()
+private fun parseColumns(cratesLines: Sequence<String>): Map<Int, List<Char>> {
+    val rowsWithIndex = cratesLines
         .map { line ->
             line
-                .chunked(4)
-                .map { it[1] }
+                .chunked(4) { it[1] }
                 .map { if (it == ' ') null else it }
-        }
+        }.toList()
     val rows = rowsWithIndex.dropLast(1)
     val indexes = rowsWithIndex
         .last()
@@ -40,18 +44,21 @@ private fun parse(path: Path): Pair<Crates, List<Command>> {
                 .reversed()
                 .filterNotNull()
         }
-    val commands = commandsString
-        .lines()
-        .map { line ->
-            line
-                .split("move", "from", "to")
-                .filter { it.isNotBlank() }
-                .map { it.trim() }
-                .map { it.toInt() }
-        }
-        .map { (amount, from, to) -> Command(amount, from, to) }
-    return columns to commands
+    return columns
 }
+
+private val COMMAND_REGEX = Regex("""move (\d+) from (\d+) to (\d+)""")
+private fun parseCommands(commands: Sequence<String>) = commands
+    .map { line ->
+        COMMAND_REGEX
+            .find(line)
+            ?.groups
+            ?.map { it ?: throw IllegalArgumentException("invalid command: $line") }
+            ?.map { it.value.toInt() }
+            ?.let { (amount, from, to) -> Command(amount, from, to) }
+            ?: throw IllegalArgumentException("invalid command: $line")
+    }
+    .map { (amount, from, to) -> Command(amount, from, to) }
 
 private data class Command(val amount: Int, val from: Int, val to: Int)
 
