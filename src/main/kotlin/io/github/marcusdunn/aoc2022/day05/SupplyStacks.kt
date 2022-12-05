@@ -1,6 +1,7 @@
 package io.github.marcusdunn.aoc2022.day05
 
 import io.github.marcusdunn.aoc2022.splitAt
+import io.github.marcusdunn.aoc2022.transpose
 import java.nio.file.Path
 import kotlin.io.path.useLines
 
@@ -23,26 +24,15 @@ private fun <T> parse(path: Path, block: (crates: Crates, commands: Sequence<Com
         .run { block(parseCrates(next()), parseCommands(next())) }
 }
 
-private fun parseCrates(cratesLines: Sequence<String>): Crates {
-    val rowsWithIndex = cratesLines
-        .map { line ->
-            line
-                .chunked(4) { it[1] }
-                .map { if (it == ' ') null else it }
-        }
-        .toList()
-    val rows = rowsWithIndex.dropLast(1)
-    return rowsWithIndex
-        .last()
-        .map { it ?: throw NullPointerException("last row contained null values") }
-        .map { it.digitToInt() }
-        .associateWith { idx ->
-            rows
-                .map { it.getOrNull(idx - 1) }
-                .reversed()
-                .filterNotNull()
-        }
-}
+private fun parseCrates(cratesLines: Sequence<String>) = cratesLines
+    .map { line -> line.chunked(4) { it[1] }.map { if (it == ' ') null else it } }
+    .toList()
+    .dropLast(1)
+    .transpose()
+    .withIndex()
+    .associate { (idx, v) -> idx + 1 to v.reversed().filterNotNull() }
+
+private data class Command(val amount: Int, val from: Int, val to: Int)
 
 private val COMMAND_REGEX = Regex("""move (\d+) from (\d+) to (\d+)""")
 private fun parseCommands(commands: Sequence<String>) = commands
@@ -55,16 +45,14 @@ private fun parseCommands(commands: Sequence<String>) = commands
     }
     .map { (amount, from, to) -> Command(amount, from, to) }
 
-private data class Command(val amount: Int, val from: Int, val to: Int)
-
 private fun interface Crane {
     fun runCommand(command: Command, columns: Crates): Crates
 }
 
 private val CrateMover9000 = Crane { (amount, from, to), columns ->
     columns.toMutableMap().apply {
-        val fromCol = getOrElse(from) { throw IndexOutOfBoundsException("no entry for $from") }
-        val toCol = getOrElse(to) { throw IndexOutOfBoundsException("no entry for $to") }
+        val fromCol = getOrElse(from) { throw IndexOutOfBoundsException("no entry for $from in $this") }
+        val toCol = getOrElse(to) { throw IndexOutOfBoundsException("no entry for $to in $this") }
         set(to, toCol + fromCol.takeLast(amount).reversed())
         set(from, fromCol.dropLast(amount))
     }

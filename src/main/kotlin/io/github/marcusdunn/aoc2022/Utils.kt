@@ -14,3 +14,4 @@ fun <T> Sequence<T>.splitAt(predicate: (T) -> Boolean): Sequence<Sequence<T>> = 
         })
     }
 }
+fun <T> List<List<T>>.transpose() = (0 until maxOf { it.size }).map { col -> map { it.getOrNull(col) } }
