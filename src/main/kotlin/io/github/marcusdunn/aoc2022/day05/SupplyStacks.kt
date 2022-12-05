@@ -16,13 +16,12 @@ private fun run(crane: Crane, crates: Crates, commands: Sequence<Command>) = com
     .map { it.last() }
     .joinToString(separator = "")
 
-private fun <T> parse(path: Path, block: (crates: Crates, commands: Sequence<Command>) -> T) = path
-    .useLines { lines ->
-        lines
-            .splitAt { it.isBlank() }
-            .iterator()
-            .run { block(parseCrates(next()), parseCommands(next())) }
-    }
+private fun <T> parse(path: Path, block: (crates: Crates, commands: Sequence<Command>) -> T) = path.useLines { lines ->
+    lines
+        .splitAt { it.isBlank() }
+        .iterator()
+        .run { block(parseCrates(next()), parseCommands(next())) }
+}
 
 private fun parseCrates(cratesLines: Sequence<String>): Crates {
     val rowsWithIndex = cratesLines
@@ -32,7 +31,7 @@ private fun parseCrates(cratesLines: Sequence<String>): Crates {
                 .map { if (it == ' ') null else it }
         }.toList()
     val rows = rowsWithIndex.dropLast(1)
-    val columns = rowsWithIndex
+    return rowsWithIndex
         .last()
         .map { it ?: throw NullPointerException("last row contained null values") }
         .map { it.digitToInt() }
@@ -42,7 +41,6 @@ private fun parseCrates(cratesLines: Sequence<String>): Crates {
                 .reversed()
                 .filterNotNull()
         }
-    return columns
 }
 
 private val COMMAND_REGEX = Regex("""move (\d+) from (\d+) to (\d+)""")
