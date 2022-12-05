@@ -29,7 +29,8 @@ private fun parseCrates(cratesLines: Sequence<String>): Crates {
             line
                 .chunked(4) { it[1] }
                 .map { if (it == ' ') null else it }
-        }.toList()
+        }
+        .toList()
     val rows = rowsWithIndex.dropLast(1)
     return rowsWithIndex
         .last()
@@ -46,7 +47,12 @@ private fun parseCrates(cratesLines: Sequence<String>): Crates {
 private val COMMAND_REGEX = Regex("""move (\d+) from (\d+) to (\d+)""")
 private fun parseCommands(commands: Sequence<String>) = commands
     .map { COMMAND_REGEX.find(it) ?: throw IllegalArgumentException("invalid command $it") }
-    .map { matchResult -> matchResult.destructured.toList().map { it.toInt() } }
+    .map { matchResult ->
+        matchResult
+            .destructured
+            .toList()
+            .map { it.toInt() }
+    }
     .map { (amount, from, to) -> Command(amount, from, to) }
 
 private data class Command(val amount: Int, val from: Int, val to: Int)
