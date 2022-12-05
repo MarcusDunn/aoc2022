@@ -50,19 +50,21 @@ private fun interface Crane {
 }
 
 private val CrateMover9000 = Crane { (amount, from, to), columns ->
-    columns.toMutableMap().apply {
-        val fromCol = getOrElse(from) { throw IndexOutOfBoundsException("no entry for $from in $this") }
-        val toCol = getOrElse(to) { throw IndexOutOfBoundsException("no entry for $to in $this") }
-        set(to, toCol + fromCol.takeLast(amount).reversed())
-        set(from, fromCol.dropLast(amount))
+    columns.mapValues { (idx, stack) ->
+        when (idx) {
+            from -> stack.dropLast(amount)
+            to -> stack + columns[from]!!.takeLast(amount).reversed()
+            else -> stack
+        }
     }
 }
 
 private val CrateMover9001 = Crane { (amount, from, to), columns ->
-    columns.toMutableMap().apply {
-        val fromCol = getOrElse(from) { throw IndexOutOfBoundsException("no entry for $from in $this") }
-        val toCol = getOrElse(to) { throw IndexOutOfBoundsException("no entry for $from in $this") }
-        set(to, toCol + fromCol.takeLast(amount))
-        set(from, fromCol.dropLast(amount))
+    columns.mapValues { (idx, stack) ->
+        when (idx) {
+            from -> stack.dropLast(amount)
+            to -> stack + columns[from]!!.takeLast(amount)
+            else -> stack
+        }
     }
 }
