@@ -7,8 +7,19 @@ fun part1(path: Path) = solve(CrateMover9000, path)
 
 fun part2(path: Path) = solve(CrateMover9001, path)
 
-private fun solve(crane: Crane, path: Path): String {
-    val (crates, commands) = path.readText().split("\n\n")
+private fun solve(crane: Crane, path: Path) = parse(path)
+    .let { (crates, commands) ->
+        commands
+            .fold(crates) { acc, command -> crane.runCommand(command, acc) }
+            .values
+            .flatten()
+            .joinToString("")
+    }
+
+typealias Crates = Map<Int, List<Char>>
+
+private fun parse(path: Path): Pair<Crates, List<Command>> {
+    val (crates, commandsString) = path.readText().split("\n\n")
     val rowsWithIndex = crates
         .lines()
         .map { line ->
@@ -29,7 +40,7 @@ private fun solve(crane: Crane, path: Path): String {
                 .reversed()
                 .filterNotNull()
         }
-    return commands
+    val commands = commandsString
         .lines()
         .map { line ->
             line
@@ -38,39 +49,30 @@ private fun solve(crane: Crane, path: Path): String {
                 .map { it.trim() }
                 .map { it.toInt() }
         }
-        .map { (move, from, to) -> crane.createCommand(move, from, to) }
-        .fold(columns) { acc, command -> command.execute(acc) }
-        .values
-        .map { it.last() }
-        .joinToString(separator = "")
+        .map { (amount, from, to) -> Command(amount, from, to) }
+    return columns to commands
 }
+
+private data class Command(val amount: Int, val from: Int, val to: Int)
 
 private fun interface Crane {
-    fun createCommand(amount: Int, from: Int, to: Int): Command
+    fun runCommand(command: Command, columns: Crates): Crates
 }
 
-private fun interface Command {
-    fun execute(columns: Map<Int, List<Char>>): Map<Int, List<Char>>
-}
-
-private val CrateMover9000 = Crane { amount, from, to ->
-    Command { columns ->
-        columns.toMutableMap().apply {
-            val fromCol = getOrElse(from) { throw IndexOutOfBoundsException("no entry for $from") }
-            val toCol = getOrElse(to) { throw IndexOutOfBoundsException("no entry for $to") }
-            set(to, toCol + fromCol.takeLast(amount).reversed())
-            set(from, fromCol.dropLast(amount))
-        }
+private val CrateMover9000 = Crane { (amount, from, to), columns ->
+    columns.toMutableMap().apply {
+        val fromCol = getOrElse(from) { throw IndexOutOfBoundsException("no entry for $from") }
+        val toCol = getOrElse(to) { throw IndexOutOfBoundsException("no entry for $to") }
+        set(to, toCol + fromCol.takeLast(amount).reversed())
+        set(from, fromCol.dropLast(amount))
     }
 }
 
-private val CrateMover9001 = Crane { amount, from, to ->
-    Command { columns ->
-        columns.toMutableMap().apply {
-            val fromCol = getOrElse(from) { throw IndexOutOfBoundsException("no entry for $from in $this") }
-            val toCol = getOrElse(to) { throw IndexOutOfBoundsException("no entry for $from in $this") }
-            set(to, toCol + fromCol.takeLast(amount))
-            set(from, fromCol.dropLast(amount))
-        }
+private val CrateMover9001 = Crane { (amount, from, to), columns ->
+    columns.toMutableMap().apply {
+        val fromCol = getOrElse(from) { throw IndexOutOfBoundsException("no entry for $from in $this") }
+        val toCol = getOrElse(to) { throw IndexOutOfBoundsException("no entry for $from in $this") }
+        set(to, toCol + fromCol.takeLast(amount))
+        set(from, fromCol.dropLast(amount))
     }
 }
