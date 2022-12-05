@@ -25,8 +25,7 @@ private fun <T> parse(path: Path, block: (crates: Crates, commands: Sequence<Com
 }
 
 private fun parseCrates(cratesLines: Sequence<String>) = cratesLines
-    .map { line -> line.chunked(4) { it[1] }.map { if (it == ' ') null else it } }
-    .toList()
+    .mapTo(mutableListOf()) { line -> line.chunked(4) { it[1] }.map { if (it == ' ') null else it } }
     .dropLast(1)
     .transpose()
     .withIndex()
@@ -37,12 +36,7 @@ private data class Command(val amount: Int, val from: Int, val to: Int)
 private val COMMAND_REGEX = Regex("""move (\d+) from (\d+) to (\d+)""")
 private fun parseCommands(commands: Sequence<String>) = commands
     .map { COMMAND_REGEX.find(it) ?: throw IllegalArgumentException("invalid command $it") }
-    .map { matchResult ->
-        matchResult
-            .destructured
-            .toList()
-            .map { it.toInt() }
-    }
+    .map { matchResult -> matchResult.destructured.toList().map { it.toInt() } }
     .map { (amount, from, to) -> Command(amount, from, to) }
 
 private fun interface Crane {
