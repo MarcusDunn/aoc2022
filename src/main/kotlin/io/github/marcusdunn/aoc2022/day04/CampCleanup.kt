@@ -26,7 +26,5 @@ private fun Sequence<String>.parse() = this
 
 private fun IntRange.overlap(intRange: IntRange) =
         this.first >= intRange.first && this.first <= intRange.last ||
-        this.last >= intRange.first && this.last <= intRange.last ||
-        this.first <= intRange.first && this.last >= intRange.first ||
-        this.first <= intRange.last && this.last >= intRange.last
+        this.first <= intRange.first && this.last >= intRange.first
 private fun IntRange.contains(intRange: IntRange) = intRange.first in this && intRange.last in this
