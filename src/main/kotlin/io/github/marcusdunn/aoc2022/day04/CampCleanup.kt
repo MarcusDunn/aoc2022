@@ -3,16 +3,14 @@ package io.github.marcusdunn.aoc2022.day04
 import java.nio.file.Path
 import kotlin.io.path.useLines
 
-fun part1(path: Path) = path.useLines { lines ->
-    lines
-        .parse()
-        .count { (fst, snd) -> fst.contains(snd) || snd.contains(fst) }
-}
+fun part1(path: Path) = solve(path) { fst, snd -> fst contains snd || snd contains fst }
 
-fun part2(path: Path) = path.useLines { lines ->
+fun part2(path: Path) = solve(path) { fst, snd -> fst overlap snd }
+
+private fun solve(path: Path, pred: (IntRange, IntRange) -> Boolean) = path.useLines { lines ->
     lines
         .parse()
-        .count { (fst, snd) -> fst.overlap(snd) }
+        .count { pred(it.first, it.second) }
 }
 
 private fun Sequence<String>.parse() = this
@@ -24,7 +22,5 @@ private fun Sequence<String>.parse() = this
     }
     .map { (fst, snd) -> fst to snd }
 
-private fun IntRange.overlap(intRange: IntRange) =
-        this.first >= intRange.first && this.first <= intRange.last ||
-        this.first <= intRange.first && this.last >= intRange.first
-private fun IntRange.contains(intRange: IntRange) = intRange.first in this && intRange.last in this
+private infix fun IntRange.overlap(intRange: IntRange) = first in intRange || intRange.first in this
+private infix fun IntRange.contains(intRange: IntRange) = intRange.first in this && intRange.last in this
