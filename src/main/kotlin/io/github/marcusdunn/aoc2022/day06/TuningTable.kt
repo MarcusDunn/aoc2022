@@ -9,7 +9,5 @@ fun part2(path: Path) = solve(path, 14)
 
 private fun solve(path: Path, uniqueCount: Int) = path
     .readText()
-    .windowed(uniqueCount) { it.toSet() }
-    .withIndex()
-    .first { (_, chars) -> chars.size == uniqueCount }
-    .index + uniqueCount
+    .windowedSequence(uniqueCount) { it.toSet() }
+    .indexOfFirst { it.size == uniqueCount } + uniqueCount
