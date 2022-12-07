@@ -44,8 +44,7 @@ private fun parseRoot(path: Path) = path
                     pwd
                 ))
                         as File.Directory
-            }.also { require(out.isEmpty()) }
-
+            }
             is Command.Ls -> pwd.apply { contents.addAll(out.map { File.parse(it, pwd) }) }
         }
     }

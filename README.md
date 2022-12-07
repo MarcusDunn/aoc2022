@@ -21,7 +21,7 @@ where `<number>` is the zero-padded day number (eg. `01`).
 - [x] 04 [Camp Cleanup][04]
 - [x] 05 [Supply Stacks][05]
 - [x] 06 [Tuning Table][06]
-- [ ] 07
+- [x] 07 [No Space Left On Device][07]
 - [ ] 08
 - [ ] 09
 - [ ] 10
@@ -54,3 +54,5 @@ where `<number>` is the zero-padded day number (eg. `01`).
 [05]: https://github.com/MarcusDunn/aoc2022/blob/master/src/main/kotlin/io/github/marcusdunn/aoc2022/day05/SupplyStacks.kt
 
 [06]: https://github.com/MarcusDunn/aoc2022/blob/master/src/main/kotlin/io/github/marcusdunn/aoc2022/day06/TuningTable.kt
+
+[07]: https://github.com/MarcusDunn/aoc2022/blob/master/src/main/kotlin/io/github/marcusdunn/aoc2022/day07/NoSpaceLeftOnDevice.kt
