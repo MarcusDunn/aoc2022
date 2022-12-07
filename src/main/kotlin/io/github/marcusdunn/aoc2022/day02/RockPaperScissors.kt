@@ -22,18 +22,21 @@ fun scorePart1(op: Char, me: Char) = when (op) {
         'Z' -> 3 + 0
         else -> throw IllegalArgumentException("must be one of X, Y, or Z")
     }
+
     'B' -> when (me) {
         'X' -> 1 + 0
         'Y' -> 2 + 3
         'Z' -> 3 + 6
         else -> throw IllegalArgumentException("must be one of X, Y, or Z")
     }
+
     'C' -> when (me) {
         'X' -> 1 + 6
         'Y' -> 2 + 0
         'Z' -> 3 + 3
         else -> throw IllegalArgumentException("must be one of X, Y, or Z")
     }
+
     else -> throw IllegalArgumentException("must be one of A, B, or C")
 }
 
