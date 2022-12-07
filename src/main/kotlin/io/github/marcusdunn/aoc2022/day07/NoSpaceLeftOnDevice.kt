@@ -33,7 +33,6 @@ private fun parseRoot(path: Path) = path
     .drop(1)
     .map { it.lines() }
     .map { it.first() to it.drop(1) }
-    .onEach { println(it) }
     .fold(File.Directory("/", mutableListOf(), null)) { pwd, (commandString, out) ->
         when (val command = Command.parse(commandString)) {
             is Command.Cd -> when (command.path) {
