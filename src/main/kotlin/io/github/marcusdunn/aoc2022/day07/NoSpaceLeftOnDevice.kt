@@ -28,9 +28,8 @@ fun part2(path: Path) = parseRoot(path)
 private fun parseRoot(path: Path) = path
     .readText()
     .splitToSequence("$")
-    .drop(1)
+    .drop(2)
     .map { it.trim() }
-    .drop(1)
     .map { it.lines() }
     .map { it.first() to it.drop(1) }
     .fold(File.Directory("/", mutableListOf(), null)) { pwd, (commandString, out) ->
