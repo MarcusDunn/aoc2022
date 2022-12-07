@@ -34,16 +34,16 @@ private fun parseRoot(path: Path) = path
     .map { it.trim() }
     .map { it.lines() }
     .map { it.first() to it.drop(1) }
-    .fold(File.Directory("/", mutableListOf(), null)) { pwd, (commandString, out) ->
+    .fold(File.Directory("/", mutableListOf(), null)) { wd, (commandString, out) ->
         when (val command = Command.parse(commandString)) {
             is Command.Cd -> when (command.path) {
-                ".." -> pwd.parent ?: pwd
-                else -> pwd.contents
+                ".." -> wd.parent ?: wd
+                else -> wd.contents
                     .filterIsInstance<File.Directory>()
                     .find { it.name == command.path }!!
             }
 
-            is Command.Ls -> pwd.apply { contents.addAll(out.map { File.parse(it, pwd) }) }
+            is Command.Ls -> wd.apply { contents.addAll(out.map { File.parse(it, wd) }) }
         }
     }
     .root()
