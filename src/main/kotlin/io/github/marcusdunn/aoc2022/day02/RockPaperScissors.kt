@@ -6,6 +6,7 @@ import kotlin.io.path.useLines
 fun part1(path: Path) = solve(path, ::scorePart1)
 
 fun part2(path: Path) = solve(path, ::scorePart2)
+
 fun solve(path: Path, score: (Char, Char) -> Int) = path.useLines { lines ->
     lines
         .map { it.split(" ") }
