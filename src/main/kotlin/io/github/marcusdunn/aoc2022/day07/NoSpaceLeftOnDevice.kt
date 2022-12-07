@@ -64,18 +64,18 @@ private sealed class File {
     abstract val name: String
     abstract val parent: Directory?
 
+    fun root(): Directory = parent?.root() ?: this as Directory
     abstract fun size(): Int
     abstract fun <T> fold(init: T, visitor: (T, File) -> T): T
 
     class Directory(override val name: String, val contents: MutableList<File>, override val parent: Directory?) :
         File() {
-        fun root(): Directory = parent?.root() ?: this
         override fun size() = contents.sumOf { it.size() }
         override fun <T> fold(init: T, visitor: (T, File) -> T): T =
             contents.fold(visitor(init, this)) { acc, file -> file.fold(acc, visitor) }
     }
 
-    class Regular(override val name: String, val size: Int, override val parent: Directory?) : File() {
+    class Regular(override val name: String, val size: Int, override val parent: Directory) : File() {
         override fun size() = size
         override fun <T> fold(init: T, visitor: (T, File) -> T): T = visitor(init, this)
     }
