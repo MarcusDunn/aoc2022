@@ -19,21 +19,21 @@ fun scorePart1V2(op: Char, me: Char) = when (me) {
         'A' -> 3
         'B' -> 0
         'C' -> 6
-        else -> throw IllegalArgumentException("$me must be A, B, or C")
+        else -> throw IllegalArgumentException("$op must be A, B, or C")
     }
 
     'Y' -> 2 + when (op) {
         'A' -> 6
         'B' -> 3
         'C' -> 0
-        else -> throw IllegalArgumentException("$me must be A, B, or C")
+        else -> throw IllegalArgumentException("$op must be A, B, or C")
     }
 
     'Z' -> 3 + when (op) {
         'A' -> 0
         'B' -> 6
         'C' -> 3
-        else -> throw IllegalArgumentException("$me must be A, B, or C")
+        else -> throw IllegalArgumentException("$op must be A, B, or C")
     }
 
     else -> throw IllegalArgumentException("$me must be R, P, or S")
