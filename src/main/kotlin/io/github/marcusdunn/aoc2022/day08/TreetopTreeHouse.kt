@@ -6,15 +6,15 @@ import kotlin.io.path.useLines
 
 fun part1(path: Path): Int = parse(path).let { grid ->
     buildSet {
-        addHorizontalToSet(grid)
-        addHorizontalToSet(grid.transposeSquare()) { (i, j) -> j to i }
+        addHorizontal(grid)
+        addHorizontal(grid.transposeSquare()) { (i, j) -> j to i }
     }.count()
 }
 
 fun part2(path: Path): Int = parse(path).let { grid ->
     buildMap {
-        addHorizontalToMap(grid)
-        addHorizontalToMap(grid.transposeSquare()) { (fst, snd) -> snd to fst }
+        addHorizontal(grid)
+        addHorizontal(grid.transposeSquare()) { (i, j) -> j to i }
     }.maxOf { it.value }
 }
 
@@ -23,13 +23,13 @@ fun parse(path: Path) = path.useLines { lines ->
     lines.map { it.map { it.digitToInt() } }.toList()
 }
 
-private fun MutableMap<Pair<Int, Int>, Int>.addHorizontalToMap(
+private fun MutableMap<Pair<Int, Int>, Int>.addHorizontal(
     grid: List<List<Int>>,
-    calcKey: (Pair<Int, Int>) -> Pair<Int, Int> = { it }
+    keyMapper: (Pair<Int, Int>) -> Pair<Int, Int> = { it }
 ) = grid
     .forEachIndexed { i, row ->
         row.forEachIndexed { j, tree ->
-            compute(calcKey(i to j)) { _, left ->
+            compute(keyMapper(i to j)) { _, left ->
                 (left ?: 1) * scoreHorizontal(
                     tree = tree,
                     right = row.take(maxOf(0, j)),
@@ -40,9 +40,9 @@ private fun MutableMap<Pair<Int, Int>, Int>.addHorizontalToMap(
     }
 
 
-private fun MutableSet<Pair<Int, Int>>.addHorizontalToSet(
+private fun MutableSet<Pair<Int, Int>>.addHorizontal(
     grid: List<List<Int>>,
-    calcKey: (Pair<Int, Int>) -> Pair<Int, Int> = { it }
+    keyMapper: (Pair<Int, Int>) -> Pair<Int, Int> = { it }
 ) = grid
     .forEachIndexed { i, row ->
         row.forEachIndexed { j, tree ->
@@ -52,7 +52,7 @@ private fun MutableSet<Pair<Int, Int>>.addHorizontalToSet(
                     left = row.map { it }.takeLast(row.size - j - 1)
                 )
             ) {
-                add(calcKey(i to j))
+                add(keyMapper(i to j))
             }
         }
     }
