@@ -86,6 +86,5 @@ fun part1(path: Path): Int = path.useLines { lines ->
             }.toSet()
         )
         .sortedBy { it.first * 10 + it.second }
-        .onEach { println("final: $it") }
         .count()
 }
