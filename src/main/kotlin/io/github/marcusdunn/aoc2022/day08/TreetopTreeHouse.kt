@@ -16,32 +16,26 @@ fun scoreHorizontal(tree: Int, right: List<Int>, left: List<Int>) =
 
 fun part2(path: Path): Int = path.useLines { lines ->
     val grid = lines
-        .map { it.map { it.digitToInt() }.withIndex().toList() }
-        .toList()
-        .withIndex()
+        .map { it.map { it.digitToInt() } }
         .toList()
     val b = grid
-        .flatMap { (i, row) ->
-            row.map { (j, tree) ->
+        .flatMapIndexed { i, row ->
+            row.mapIndexed { j, tree ->
                 (i to j) to scoreHorizontal(
                     tree = tree,
-                    right = row.map { it.value }.take(maxOf(0, j)),
-                    left = row.map { it.value }.takeLast(row.size - j - 1)
+                    right = row.take(maxOf(0, j)),
+                    left = row.takeLast(row.size - j - 1)
                 )
             }
         }.toMap()
     val a = grid
-        .map { it.value.map { it.value } }
         .transpose()
-        .map { it.withIndex().toList() }
-        .withIndex()
-        .toList()
-        .flatMap { (i, row) ->
-            row.map { (j, tree) ->
+        .flatMapIndexed { i, row ->
+            row.mapIndexed { j, tree ->
                 (j to i) to scoreHorizontal(
                     tree = tree!!,
-                    right = row.map { it.value!! }.take(maxOf(0, j)),
-                    left = row.map { it.value!! }.takeLast(row.size - j - 1)
+                    right = row.map { it!! }.take(maxOf(0, j)),
+                    left = row.map { it!! }.takeLast(row.size - j - 1)
                 )
             }
         }
