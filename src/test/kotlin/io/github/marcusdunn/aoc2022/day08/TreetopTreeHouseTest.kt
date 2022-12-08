@@ -4,7 +4,7 @@ import kotlin.io.path.Path
 import kotlin.test.assertEquals
 import org.junit.jupiter.api.Test
 
-class Day08Test {
+class TreetopTreeHouseTest {
     @Test
     fun `check part 1 sample`() {
         val part1 = part1(Path("src/test/resources/day08/sample.txt"))

@@ -67,7 +67,6 @@ fun part1(path: Path): Int = path.useLines { lines ->
                     left = row.map { it.value }.takeLast(row.size - j - 1)
                 )
             }.map { i to it.index }
-                .onEach { println(it) }
         }
         .toSet()
         .union(grid
@@ -84,7 +83,6 @@ fun part1(path: Path): Int = path.useLines { lines ->
                         left = row.map { it.value!! }.takeLast(row.size - j - 1)
                     )
                 }.map { it.index to i }
-                    .onEach { println(it) }
             }.toSet()
         )
         .sortedBy { it.first * 10 + it.second }
