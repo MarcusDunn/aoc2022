@@ -11,8 +11,7 @@ fun solve(path: Path, score: (Char, Char) -> Int) = path.useLines { lines ->
     lines
         .map { it.split(" ") }
         .map { (op, me) -> op.first() to me.first() }
-        .map { score(it.first, it.second) }
-        .sum()
+        .sumOf { score(it.first, it.second) }
 }
 
 fun scorePart1V2(op: Char, me: Char) = when (me) {
