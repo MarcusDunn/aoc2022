@@ -3,41 +3,41 @@ package io.github.marcusdunn.aoc2022.day02
 import java.nio.file.Path
 import kotlin.io.path.useLines
 
-fun part1(path: Path) = solve(path, ::scorePart1)
+fun part1(path: Path) = solve(path, ::scorePart1V2)
 
 fun part2(path: Path) = solve(path, ::scorePart2)
 
 fun solve(path: Path, score: (Char, Char) -> Int) = path.useLines { lines ->
     lines
         .map { it.split(" ") }
-        .map { it.first().first() to it.last().first() }
+        .map { (op, me) -> op.first() to me.first() }
         .map { score(it.first, it.second) }
         .sum()
 }
 
-fun scorePart1(op: Char, me: Char) = when (op) {
-    'A' -> when (me) {
-        'X' -> 1 + 3
-        'Y' -> 2 + 6
-        'Z' -> 3 + 0
-        else -> throw IllegalArgumentException("must be one of X, Y, or Z")
+fun scorePart1V2(op: Char, me: Char) = when (me) {
+    'X' -> 1 + when (op) {
+        'A' -> 3
+        'B' -> 0
+        'C' -> 6
+        else -> throw IllegalArgumentException("$me must be A, B, or C")
     }
 
-    'B' -> when (me) {
-        'X' -> 1 + 0
-        'Y' -> 2 + 3
-        'Z' -> 3 + 6
-        else -> throw IllegalArgumentException("must be one of X, Y, or Z")
+    'Y' -> 2 + when (op) {
+        'A' -> 6
+        'B' -> 3
+        'C' -> 0
+        else -> throw IllegalArgumentException("$me must be A, B, or C")
     }
 
-    'C' -> when (me) {
-        'X' -> 1 + 6
-        'Y' -> 2 + 0
-        'Z' -> 3 + 3
-        else -> throw IllegalArgumentException("must be one of X, Y, or Z")
+    'Z' -> 3 + when (op) {
+        'A' -> 0
+        'B' -> 6
+        'C' -> 3
+        else -> throw IllegalArgumentException("$me must be A, B, or C")
     }
 
-    else -> throw IllegalArgumentException("must be one of A, B, or C")
+    else -> throw IllegalArgumentException("$me must be R, P, or S")
 }
 
 fun scorePart2(op: Char, me: Char) = when (me) {
