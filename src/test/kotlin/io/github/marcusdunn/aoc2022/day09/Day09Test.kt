@@ -48,6 +48,6 @@ class Day09Test {
     @Test
     fun `check part 2`() {
         val part2 = part2(Path("src/test/resources/day09/input.txt"))
-        assertEquals(-1, part2)
+        assertEquals(2514, part2)
     }
 }
