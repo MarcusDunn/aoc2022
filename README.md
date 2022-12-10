@@ -59,6 +59,6 @@ where `<number>` is the zero-padded day number (eg. `01`).
 
 [08]: https://github.com/MarcusDunn/aoc2022/blob/master/src/main/kotlin/io/github/marcusdunn/aoc2022/day08/TreetopTreeHouse.kt
 
-[09]: https://github.com/MarcusDunn/aoc2022/blob/master/src/main/kotlin/io/github/marcusdunn/aoc2022/day08/RopeBridge.kt
+[09]: https://github.com/MarcusDunn/aoc2022/blob/master/src/main/kotlin/io/github/marcusdunn/aoc2022/day09/RopeBridge.kt
 
-[10]: https://github.com/MarcusDunn/aoc2022/blob/master/src/main/kotlin/io/github/marcusdunn/aoc2022/day08/CathodeRayTube.kt
+[10]: https://github.com/MarcusDunn/aoc2022/blob/master/src/main/kotlin/io/github/marcusdunn/aoc2022/day10/CathodeRayTube.kt
