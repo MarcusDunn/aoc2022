@@ -20,15 +20,16 @@ fun part2(path: Path) = path.useLines { lines ->
 private fun Sequence<State>.toCrt() = this
     .foldIndexed(StringBuilder()) { i, sb, state ->
         val crtLoc = i % 40
-        if (crtLoc == 0 && i != 0) {
-            sb.append("\n")
+        sb.apply {
+            if (crtLoc == 0 && i != 0) {
+                append('\n')
+            }
+            if (crtLoc - state.x in -1..1) {
+                append('█')
+            } else {
+                append(' ')
+            }
         }
-        if (crtLoc - state.x in -1..1) {
-            sb.append("█")
-        } else {
-            sb.append(" ")
-        }
-        sb
     }.toString()
 
 private fun Sequence<Instruction>.toStates(): Sequence<State> = sequence {
@@ -64,6 +65,3 @@ private sealed class Instruction(val cycles: Int) {
         }
     }
 }
-
-
-
