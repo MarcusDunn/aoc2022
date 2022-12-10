@@ -9,24 +9,16 @@ typealias Vec2 = Pair<Int, Int>
 fun part1(path: Path) = solve(path, 2)
 fun part2(path: Path) = solve(path, 10)
 
-fun solve(path: Path, size: Int): Int {
-    var running = List(size) { 0 to 0 }
-    val tailPoses = mutableSetOf<Vec2>()
-
-    for (direction in parse(path)) {
-        val next = mutableListOf(newHead(direction, running.first()))
-        for (i in running.indices) {
-            val nextHead = next[i]
-            val tail = running.getOrNull(i + 1) ?: continue
-            val newTail = simulateLink(nextHead, tail)
-            next.add(newTail)
-        }
-        tailPoses.add(running.last())
-        tailPoses.add(next.last())
-        running = next
+fun solve(path: Path, size: Int) = buildSet {
+    parse(path).fold(List(size) { 0 to 0 }) { running, direction ->
+        running
+            .drop(1)
+            .foldIndexed(listOf(newHead(direction, running.first()))) { i, next, tail ->
+                next + simulateLink(next[i], tail)
+            }
+            .also { add(it.last()) }
     }
-    return tailPoses.size
-}
+}.size
 
 fun simulateLink(
     newHead: Pair<Int, Int>,
