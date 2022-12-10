@@ -4,7 +4,8 @@ import java.nio.file.Path
 import kotlin.io.path.useLines
 
 fun part1(path: Path) = path.useLines { lines ->
-    parse(lines)
+    lines
+        .toInstructions()
         .toStates()
         .filter { it.pc >= 20 }
         .filter { it.pc - 20 % 40 == 0 }
@@ -12,7 +13,8 @@ fun part1(path: Path) = path.useLines { lines ->
 }
 
 fun part2(path: Path) = path.useLines { lines ->
-    parse(lines)
+    lines
+        .toInstructions()
         .toStates()
         .toCrt()
 }
@@ -42,7 +44,7 @@ private fun Sequence<Instruction>.toStates(): Sequence<State> = sequence {
 
 private data class State(val pc: Int, val x: Int)
 
-private fun parse(lines: Sequence<String>) = lines
+private fun Sequence<String>.toInstructions() = this
     .map { Instruction.parse(it) }
     .flatMap { List(it.cycles - 1) { Instruction.Noop } + it }
 
