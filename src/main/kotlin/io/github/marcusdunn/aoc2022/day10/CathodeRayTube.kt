@@ -7,8 +7,8 @@ fun part1(path: Path) = path.useLines { lines ->
     parse(lines)
         .toStates()
         .filter { it.pc >= 20 }
-        .filter { (it.pc - 20) % 40 == 0 }
-        .sumOf { (it.pc) * it.x }
+        .filter { it.pc - 20 % 40 == 0 }
+        .sumOf { it.pc * it.x }
 }
 
 fun part2(path: Path) = path.useLines { lines ->
@@ -24,9 +24,9 @@ private fun Sequence<State>.toCrt() = this
             sb.append("\n")
         }
         if (crtLoc - state.x in -1..1) {
-            sb.append("#")
+            sb.append("█")
         } else {
-            sb.append(".")
+            sb.append(" ")
         }
         sb
     }.toString()
