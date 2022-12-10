@@ -23,8 +23,8 @@ where `<number>` is the zero-padded day number (eg. `01`).
 - [x] 06 [Tuning Table][06]
 - [x] 07 [No Space Left On Device][07]
 - [x] 08 [Treetop Tree House][08]
-- [ ] 09
-- [ ] 10
+- [x] 09 [Rope Bridge][09]
+- [x] 10 [Cathode-Ray Tube][10]
 - [ ] 11
 - [ ] 12
 - [ ] 13
