@@ -37,22 +37,20 @@ private fun Sequence<Instruction>.toStates(): Sequence<State> = sequence {
         yield(curr)
         curr = State(curr.pc + 1, instruction.apply(curr.x))
     }
-    yield(curr)
 }
 
-data class State(val pc: Int, val x: Int)
+private data class State(val pc: Int, val x: Int)
 
 private fun parse(lines: Sequence<String>) = lines
     .map { Instruction.parse(it) }
     .flatMap { List(it.cycles - 1) { Instruction.Noop } + it }
 
-fun Instruction.apply(target: Int) = when (this) {
+private fun Instruction.apply(target: Int) = when (this) {
     is Instruction.AddX -> target + x
     Instruction.Noop -> target
 }
 
-
-sealed class Instruction(val cycles: Int) {
+private sealed class Instruction(val cycles: Int) {
     data class AddX(val x: Int) : Instruction(2)
     object Noop : Instruction(1)
 
