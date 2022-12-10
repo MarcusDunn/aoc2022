@@ -6,7 +6,7 @@ import org.junit.jupiter.api.DynamicTest.dynamicTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestFactory
 
-class Day09Test {
+class RopeBridgeTest {
     @TestFactory
     fun `check simulate link`() = listOf(
         Triple(0 to 0, 0 to 0, 0 to 0),
