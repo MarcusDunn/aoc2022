@@ -12,29 +12,32 @@ fun part1(path: Path) = path.useLines { lines ->
         .sumOf { it.pc * it.x }
 }
 
+private const val CRT_ROWS = 6
+private const val CRT_COLUMNS = 40
+private const val NEWLINE_SIZE = 1
+
 fun part2(path: Path) = path.useLines { lines ->
     lines
         .toInstructions()
         .toStates()
-        .toCrt()
-}
-
-private fun Sequence<State>.toCrt() = this
-    .foldIndexed(StringBuilder()) { i, sb, state ->
-        val crtLoc = i % 40
-        sb.apply {
-            if (crtLoc == 0 && i != 0) {
-                append('\n')
-            }
-            if (crtLoc - state.x in -1..1) {
-                append('█')
-            } else {
-                append(' ')
+        .withIndex()
+        .fold(StringBuilder(CRT_ROWS * (CRT_COLUMNS + NEWLINE_SIZE))) { stringBuilder, (i, state) ->
+            val crtLoc = i % 40
+            stringBuilder.apply {
+                if (crtLoc == 0 && i != 0) {
+                    append('\n')
+                }
+                if (crtLoc - state.x in -1..1) {
+                    append('█')
+                } else {
+                    append(' ')
+                }
             }
         }
-    }.toString()
+        .toString()
+}
 
-private fun Sequence<Instruction>.toStates(): Sequence<State> = sequence {
+private fun Sequence<Instruction>.toStates() = sequence {
     var curr = State(1, 1)
     for (instruction in this@toStates) {
         yield(curr)
