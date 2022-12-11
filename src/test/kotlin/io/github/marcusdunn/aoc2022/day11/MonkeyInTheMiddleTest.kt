@@ -6,14 +6,14 @@ import kotlin.test.assertEquals
 
 class MonkeyInTheMiddleTest {
     @Test
-    fun `check part 1 sample`() {
-        val part1 = part1(Path("src/test/resources/day11/sample.txt"))
-        assertEquals(2713310158, part1)
+    fun `check part 2 sample`() {
+        val part2 = part2(Path("src/test/resources/day11/sample.txt"))
+        assertEquals(2713310158, part2)
     }
 
     @Test
-    fun `check part 1`() {
-        val part1 = part1(Path("src/test/resources/day11/input.txt"))
-        assertEquals(113232, part1)
+    fun `check part 2`() {
+        val part2 = part2(Path("src/test/resources/day11/input.txt"))
+        assertEquals(29703395016, part2)
     }
 }

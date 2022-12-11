@@ -7,7 +7,7 @@ import kotlin.io.path.useLines
 
 val ROUNDS = 10_000
 
-fun part1(path: Path) = path.useLines { lines ->
+fun part2(path: Path) = path.useLines { lines ->
     (1..ROUNDS)
         .fold(lines
             .splitAt { it.isBlank() }
