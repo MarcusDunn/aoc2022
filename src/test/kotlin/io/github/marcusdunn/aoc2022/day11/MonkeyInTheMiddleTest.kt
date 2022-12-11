@@ -8,7 +8,7 @@ class MonkeyInTheMiddleTest {
     @Test
     fun `check part 1 sample`() {
         val part1 = part1(Path("src/test/resources/day11/sample.txt"))
-        assertEquals(10605, part1)
+        assertEquals(2713310158, part1)
     }
 
     @Test
