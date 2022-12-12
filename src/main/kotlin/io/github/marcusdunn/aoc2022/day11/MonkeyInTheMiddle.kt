@@ -15,11 +15,7 @@ fun part2(path: Path) = path.useLines { lines ->
             .toList()
             .sortedBy { it.id }
         ) { it, i ->
-            it.doRound().also {
-                if (i == 1 || i == 20 || i % 1000 == 0) {
-                    println("== After round $i ==\n" + it.joinToString(separator = "\n") { it.status() } + "\n")
-                }
-            }
+            it.doRound()
         }
         .sortedByDescending { it.itemsInspected }
         .take(2)
