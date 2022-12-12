@@ -25,7 +25,7 @@ where `<number>` is the zero-padded day number (eg. `01`).
 - [x] 08 [Treetop Tree House][08]
 - [x] 09 [Rope Bridge][09]
 - [x] 10 [Cathode-Ray Tube][10]
-- [x] 11 [Monkey In The Middle Test][11]
+- [x] 11 [Monkey In The Middle][11]
 - [ ] 12
 - [ ] 13
 - [ ] 14
